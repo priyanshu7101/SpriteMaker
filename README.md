@@ -1,2 +1,3 @@
 made in java
-for making and editing png files
+\nfor making and editing png files
+\nyou will need a jre to run 
