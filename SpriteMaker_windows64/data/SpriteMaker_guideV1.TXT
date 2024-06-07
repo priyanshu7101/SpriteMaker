@@ -1,0 +1,66 @@
+MadeByMe
+guide for SpriteMaker3
+intro->A png maker/ editor
+|Topleft->info about some parameters
+	|x,y are relative position of selected pixel to topLeft of canvas
+	|no. of pixels is visible canvas
+	|HEX shows the hexcode of selected color
+	|size is size of brush to color canvas ,bigger size = more pixels selected in an approx. circle
+	|mix is ratio for application of HEX on selected canvas pixel,transparency also affects application
+	|Xoff,Yoff are no. of pixels scrolled left and down
+	|cells selected tells pixels selected from fill
+	|radial grad formula-writes the grad formula for radial mode,for those who might be interested
+	|Message bar-gives visual cue of performed actions in written form
+|TopMid->the 2 preview canvas and 7 buttons for image read writes
+	|preview canvas shows you the visible canvas (blurred for smaller images),Click it to load into working canvas
+	|load button->click to load a sprite maker file to start editing images
+		||steps:click load ,open the folder you want,open the ImageData text file and click yes to replace it.Try it on the pacman folder provided
+	|New- clears the whole canvas even the unseen parts
+	|left and right triangle- used to change through loaded images which are correctly named ie $folderName_$imageNo.
+	|Preview-updates preview canvas,A sort of save point since there is no undo
+	|save-saves the visible canvas in place of $folderName_$imageNo
+	|save new-saves the visible canvas into A new image
+|MidLeft->the tool bar
+	|line-tool to make a line on the working canvas,postion the pips on the ends of the line you want after selecting a visible HEX,then click line again.or click paste to apply changes without deactivating line tool
+	|delete-deletes a color in the colorTray,does not affect anything else
+	|fill->tool to mass select pixels for coloration,limited to 3000 pixels per click for type 1 & 2,though you can click multiple times.changes color of selected pixels retroActively,used to select pixels for grad.Comes with multiple togglable options
+		||4 directions-the good old flood fill,selects adjacent pixels in 4 directions of the pixel with same color
+		||8-directions-selects adjacent cells in 8 directions,fills checker patterns in a click
+		||All-non Transparent-selects all non transparent pixels ie >0 transparency pixels (HEX=01?????? to FF??????)
+		||All Transparent-selects all transparent pixels ie 0 transparency pixels
+	|ellipse-you get two pips one acts as center of circle and other as radius,to make a pixelated circle,click ellipse to confirm on canvas  or  click paste for multiple
+	|dropper-used to pick up color from the working canvas pixel on click,even hovering over pixels shows their HEX value in HEX,instead of selected color
+	|Select/Cut/Copy/Paste->functions to do as mentioned
+		||steps to use:Click select,it gives 2 pips to select a rectangular area to be cut or copied.holding and dragging in the rectangular area moves both pips
+		||Click Cut or Copy to Cut or Copy-copy copies selected region and cut copies and changes the copied selection area into the HEX
+		||Paste-position over required area and click paste to write the cut copy preview on the working canvas,you can paste mutiple times,click select again to disselect select tool.
+	|grad->used after line ,fill ,ellipse or select/cut/copy to make a 2 color gradient on the selected line,area,circle,area
+		||steps:select pixels with the above tools but dont apply changes yet,click grad and now you can configure the gradient on the selected area
+		||gradient color setup:beside grad there are 2 squares,they represent the two colors which are the end colors of the gradient.left one is currently chosen color ,right one is ch2 chosen when clicking grad,to change ch2 click right square select color,then click it again to confirm
+		||pips->4 pips are harder to handle but give more versatality.
+			|||In both gradients 2 pips define the min and max range,beyond which cells are coloured as transparent
+			|||in linear gradient,2 other pips define the angle of gradient,meanwhile in radial mode the other pips do something funky at all but pi/2 and 5pi/4.
+		||options for fill and grad appear and selected
+|TopRight->color changes happen here and are shown here.
+	|Main color Square-Shows current chosen color,using dropped tool hovered pixel's color is shown as a rect in the main square
+	|Brush-scroll over brush to change brush size,clicking anywhere left of working canvas sets brush size to zero
+	|C.Mix-color mixer the secondary variable controlling the weighted average of what color the pixel will be when colored.alpha is weighted average of C.Mix and r,g,b are weighted average of alpha X C.Mix
+	|color pickers-changes the r,gb,g,rb,b,rg,a,brighness parts of color respectively on scrolling.clicking also sets a diffrent color for each
+|MidMid-The main canvas where the magic happens.The max size of which is 600X600 pixels,use ScrollBars to get to where you want and turn them off when not in use
+|BottomLeft->important toggles ,zoom and floder name,rename
+	|trim Toggle changes save and save new behaviour Slightly as having it on removes outer transparent rows and columns from the image,ie you can save a single pixel png without lowering size(Always makes a square)
+	|scroll toggle removes scroll bar from the main canvas
+	|changing background turns of the colour change of transparent pixels in the main canvas
+	|randomize name toggle,turn on to change the randomly generated name to something you want,it should be a valid folder name,only backspace and visible character keys work in the name box
+	|NAME BOX-where your folder name goes,randomly generated from 0-65536,you should change it since your data can be overwritten if you save with same name on different instances
+	|pixel count -A zoom in or out controlled with mouse scroll
+|BottomLeft->color Palette and its loader and saver
+ 	|+ button saves a color for future use on the tray,scroll down the tray for more colours,after saving them
+	|click on the tray to select a color
+	|load button can load upto 300 or so colors into the tray via a text file
+	|save saves the current colorTray colors into a palette file in the current folder.
+|formatting of files and obscurities
+	|ImageData.txt:it has four parameters ,all on different lines,600 a constant,an integer between 1 and 600 which is starting pixel count on loading,no.of readable images in the folder,name of the folder
+	|palette.txt:its a list of integers all on different lines,first lines contains no. of colours-1,the rest contain colours in integer form;
+	|image names:images are arraged to be as $folderName_$imageNo where image no. starts from 0
+	|HEX=0x00000000 is eraser color which returns any selected or applied cells to 0x00ffffff the default transparent colour i used.
