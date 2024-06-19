@@ -1,5 +1,5 @@
 MadeByMe
-guide for SpriteMaker3
+guide for SpriteMaker version 1.0
 intro->A png maker/ editor
 |Topleft->info about some parameters
 	|x,y are relative position of selected pixel to topLeft of canvas
